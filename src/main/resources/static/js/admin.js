@@ -14,6 +14,8 @@ const btnAddPatient = document.getElementById("btn-add-patient");
 const modalBody = document.querySelector(".modal-body");
 const modalTitle = document.querySelector(".modal-title");
 
+const inputId = document.getElementById('id');
+
 // Add object modal
 let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
 
@@ -75,7 +77,7 @@ const getObject = ( id, type) => {
     fetch(`/admin/get${capitalizeText(type)}/${id}`)
         .then(response => response.json() )
         .then(data => {
-            document.getElementById("id").value = data[`${type}Id`];
+            inputId.value = data[`${type}Id`];
             document.getElementById("nombre").value = data[`${type}Name`];
             document.getElementById("dni").value = data[`${type}DNI`];
             document.getElementById("telefono").value = data[`${type}Phone`];
@@ -226,6 +228,7 @@ getOptionValues('specialities');
  * @param {String} tipo tipo de objeto para el cual pertenece este input 
  */
 const buildModalInput = ( tipo ) => {
+    inputId.value = 0;
     if ( tipo === 'receptionist' ) {
         modalTitle.innerHTML = "Registro de recepcionista";
         btnGuardar.setAttribute('data-type', 'receptionist');

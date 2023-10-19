@@ -6,12 +6,13 @@
     <title>[[${pageTitle}]] - Clinic App</title>
 	<link rel="stylesheet" href="/bootstrap5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/fontawesome6/css/all.min.css">
+	<link rel="icon" href="/icon/icon_clinicApp.png" type="image/x-icon">
 </head>
 <body>
     <div th:fragment="menu">
-	    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+	    <nav class="navbar navbar-expand-lg pt-0 pb-0" style="background-color: #3A6F9F;">
 		  <div class="container">
-		    <a class="navbar-brand" th:href="@{/}">Clinic App</a>
+		    <a class="navbar-brand pt-0 pb-0" th:href="@{/}"><img style="width: 60px;" src="/icon/icon_clinicApp.png">Clinic App</a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 		      <span class="navbar-toggler-icon"></span>
 		    </button>

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "doctors")
 public class Doctor {
 
 	@Id
@@ -23,8 +24,8 @@ public class Doctor {
     private Clinic 	clinic;
 
 	@ManyToOne
-    @JoinColumn(name = "shedule_id")
-    private Shedule shedule;
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -70,12 +71,12 @@ public class Doctor {
 		this.clinic = clinic;
 	}
 
-	public Shedule getShedule() {
-		return shedule;
+	public Schedule getSchedule() {
+		return schedule;
 	}
 
-	public void setShedule(Shedule shedule) {
-		this.shedule = shedule;
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 	public List<Appointment> getAppointments() {

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.utp.app.model.Shedule;
+import com.utp.app.model.Schedule;
 import com.utp.app.repository.SheduleRepository;
 
 @Service
@@ -19,19 +19,19 @@ public class SheduleService {
 	}
 	
 	@Transactional
-	public Shedule saveShedule(Shedule shedule) {
+	public Schedule saveShedule(Schedule shedule) {
 		return sheduleRepository.save(shedule);
 	}
 	
 	@Transactional
-	public List<Shedule> getShedules() {
+	public List<Schedule> getShedules() {
 		return sheduleRepository.findAll();
 	}
 	
 	@Transactional
-	public Shedule getSheduleById(Long id) {
-		Optional<Shedule> sheduleOpt = sheduleRepository.findById(id);
-		Shedule shedule = new Shedule();
+	public Schedule getSheduleById(Long id) {
+		Optional<Schedule> sheduleOpt = sheduleRepository.findById(id);
+		Schedule shedule = new Schedule();
 		if (sheduleOpt.isPresent())
 			shedule = sheduleOpt.get();
 		return shedule;

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "account")
+@Table(name = "users")
 public class User {
 	
 	@Id
@@ -42,6 +42,8 @@ public class User {
 	private String		username;
 
 	private String		password;
+	
+	private boolean		enabled;
 
 	public Long getUserId() {
 		return userId;
@@ -105,5 +107,13 @@ public class User {
 
 	public void setReceptionists(Set<Receptionist> receptionists) {
 		this.receptionists = receptionists;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

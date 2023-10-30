@@ -2,6 +2,7 @@ package com.utp.app.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "diagnoses")
 public class Diagnosis {
 
 	@Id

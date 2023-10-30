@@ -2,8 +2,8 @@ package com.utp.app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.utp.app.model.Shedule;
+import com.utp.app.model.Schedule;
 
-public interface SheduleRepository extends JpaRepository<Shedule, Long> {
+public interface SheduleRepository extends JpaRepository<Schedule, Long> {
 
 }

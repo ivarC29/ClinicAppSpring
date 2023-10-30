@@ -5,6 +5,7 @@ import java.util.Date;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "medical_records")
 public class MedicalRecord {
 
 	@Id

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: headers}">
+</head>
+<body>
+	<div class="p-5 bg-gradient bg-form"></div>
+	<div class="col-xl-6 col-lg-8 col-md-8 mx-auto">
+		<div class="card mx-4 mx-md-5 shadow-5-strong card-clinic-app">
+			<div class="card-body py-2 px-md-2">
+
+				<div class="row d-flex justify-content-center">
+					<div class="col-lg-10">
+						<div class="text-center">
+							<img src="/icon/icon_clinicApp.png" alt="Logo" class="img-fluid mb-0 logo-form">
+							
+						</div>
+						<h3 class="fw-bold mb-4 text-success text-center">Registro de usuario</h3>
+
+						<form class="form-signin" action="#" method="post" modelAttribute="usuario">
+							<div class="row form-outline mb-2">
+								<div class="col">
+										<label for="firstname" class="form-label">Nombres: </label>
+										<input type="text" name="firstname" id="firstname" class="form-control" placeholder="Jhon" required="true" />
+								</div>
+								<div class="col">
+										<label for="lastname" class="form-label">Apellidos: </label>
+										<input type="text" name="lastname" id="lastname" class="form-control" placeholder="Doe" required="true" />
+								</div>
+							</div>
+							<div class="row form-outline mb-2">
+								<div class="col">
+									<label for="dni" class="form-label">DNI: </label>
+									<input type="text" name="dni" id="dni" class="form-control" placeholder="48625896" required="true"/>
+								</div>
+								<div class="col">
+									<label for="celphone" class="form-label">Numero celular: </label>
+									<input type="text" name="celphone" id="celphone" class="form-control" placeholder="celphone"/>
+								</div>
+							</div>
+
+							<div class="form-outline mb-2">
+								<label for="lastname" class="form-label">Direccion: </label>
+								<input type="text" name="address" id="address" class="form-control" placeholder="Av. El Ejemplo #33" />
+							</div>
+							
+							<div class="row form-outline mb-2">
+								<div class="col">
+									<label for="email" class="form-label">E-mail: </label>
+									<input type="email" name="email" id="email" class="form-control" placeholder="usuario@example.com" required="true" />
+								</div>
+								<div class="col">
+									<label for="username" class="form-label">Username: </label>
+									<input type="text" name="username" id="username" class="form-control" placeholder="username" required="true" />
+								</div>
+							</div>
+							
+							<div class="row form-outline mb-2">
+								<div class="col">
+									<label for="password" class="form-label">Contraseña: </label>
+									<input type="password" name="password" id="password" class="form-control" placeholder="********" required="true" />
+								</div>
+								<div class="col">
+									<label for="password" class="form-label">Repite tu contraseña: </label>
+									<input type="password" name="password-repeat" id="password-repeat" class="form-control" placeholder="********" required="true" />
+								</div>
+							</div>
+
+
+							<!-- Submit button -->
+							<div class="d-grid gap-2">
+								<button class="btn btn-outline-success btn-block mb-4 mt-4 fw-bold "> Registrarse</button>
+							</div>
+							<div>
+				             	<p class="mb-0 text-center">¿ Ya tienes cuenta ?<a th:href="@{'/login'}" class="fw-bold"> Ingresar</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="~{fragments :: footer}"></div>
+	<div th:replace="~{fragments :: scripts}"></div>
+	<script src="/js/signup.js"></script>	
+</body>
+</html>

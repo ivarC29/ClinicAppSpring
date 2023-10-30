@@ -5,7 +5,7 @@ import java.sql.Time;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="recipe_detail")
+@Table(name="recipe_details")
 public class RecipeDetail {
 	
 	@Id

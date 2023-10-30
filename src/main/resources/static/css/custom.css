@@ -1,0 +1,14 @@
+.card-clinic-app {
+	margin-top: -270px;
+	background: hsla(0, 0%, 100%, 0.6);
+	backdrop-filter: blur(30px);
+}
+
+.bg-form {
+	background: linear-gradient(to right, #8dc936, #57af7c, #1b98d2) !important;
+	height: 300px;
+}
+
+.logo-form {
+	width: 250px;
+}

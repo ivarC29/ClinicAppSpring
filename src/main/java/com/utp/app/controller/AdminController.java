@@ -21,7 +21,7 @@ import com.utp.app.model.Doctor;
 import com.utp.app.model.MedicalSpeciality;
 import com.utp.app.model.Patient;
 import com.utp.app.model.Receptionist;
-import com.utp.app.model.Shedule;
+import com.utp.app.model.Schedule;
 import com.utp.app.model.User;
 import com.utp.app.service.AppointmentService;
 import com.utp.app.service.ClinicService;
@@ -164,8 +164,8 @@ public class AdminController {
 	
 	@GetMapping("/shedules")
 	@ResponseBody
-	public List<Shedule> getShedules() {
-		List<Shedule> objL_shedules = new ArrayList<Shedule>();
+	public List<Schedule> getShedules() {
+		List<Schedule> objL_shedules = new ArrayList<Schedule>();
 		objL_shedules = sheduleService.getShedules();
 		
 		return objL_shedules;

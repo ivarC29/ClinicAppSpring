@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "receptionists")
 public class Receptionist {
 	
 	@Id
@@ -20,8 +21,8 @@ public class Receptionist {
 	private User			user;
 	
 	@ManyToOne
-    @JoinColumn(name = "shedule_id")
-    private Shedule shedule;
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 	
 	@Column(name = "receptionist_name")
 	private String		receptionistName;
@@ -59,12 +60,12 @@ public class Receptionist {
 		this.user = user;
 	}
 
-	public Shedule getShedule() {
-		return shedule;
+	public Schedule getSchedule() {
+		return schedule;
 	}
 
-	public void setShedule(Shedule shedule) {
-		this.shedule = shedule;
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 	public String getReceptionistName() {

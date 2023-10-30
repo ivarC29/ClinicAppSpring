@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "recipes")
 public class Recipe {
 
 	@Id

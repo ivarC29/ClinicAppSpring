@@ -8,18 +8,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-public class Shedule {
+@Table(name = "schedules")
+public class Schedule {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "shedule_id")
-	private Long	sheduleId;
+	@Column(name = "schedule_id")
+	private Long	scheduleId;
 	
-	@OneToMany(mappedBy = "shedule", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Doctor> doctors;
 	
-	@OneToMany(mappedBy = "shedule", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Receptionist> receptionist;
 	
@@ -29,12 +30,12 @@ public class Shedule {
 	@Column(name = "end_time")
 	private Time	endTime;
 
-	public Long getSheduleId() {
-		return sheduleId;
+	public Long getScheduleId() {
+		return scheduleId;
 	}
 
-	public void setSheduleId(Long sheduleId) {
-		this.sheduleId = sheduleId;
+	public void setScheduleId(Long scheduleId) {
+		this.scheduleId = scheduleId;
 	}
 
 	public List<Doctor> getDoctors() {

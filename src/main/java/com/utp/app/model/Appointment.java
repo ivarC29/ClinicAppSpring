@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "appointments")
 public class Appointment {
 	
 	@Id

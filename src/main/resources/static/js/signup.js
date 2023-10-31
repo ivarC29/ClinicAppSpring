@@ -4,12 +4,23 @@ form.addEventListener( 'submit', async(event) => {
         event.preventDefault();
         
         const formData = new FormData( form );
-        let userDTO = {};
+        let userDto = {};
 
         for ( const [key, value] of formData) {
-			userDTO[key] = value;
+			userDto[key] = value;
         }
         
-        console.log(userDTO);
+        console.log(userDto);
+        
+        fetch("/user/signup", {
+			method: 'POST',
+	        body: JSON.stringify(userDto),
+	        headers: {
+	            'Content-Type': 'application/json'
+	        }
+		}).then( res => {
+			if ( !res.ok ) throw new Error('Error al guardar usuario paciente !')
+			form?.reset();
+		}).catch( console.log )
 
 })

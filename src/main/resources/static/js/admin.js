@@ -54,13 +54,12 @@ const fields = [
 ];
 
 const selectLabels = [
-    "Select user",
     "Select clinic",
-    "Select shedule",
+    "Select schedule",
     "Select speciality",
 ];
-const tiposData = ['users', 'clinics', 'shedules', 'specialities']; 
-let optionValuesForUser;
+
+const tiposData = ['clinic', 'schedule', 'specialities']; 
 let optionValuesForClinic;
 let optionValuesForShedule;
 let optionValuesForSpecialities;
@@ -74,7 +73,7 @@ const capitalizeText = (str) => {
 const getObject = ( id, type) => {
     buildModalInput(type);
     myModal.show();
-    fetch(`/admin/get${capitalizeText(type)}/${id}`)
+    fetch(`/${type}/get/${id}`)
         .then(response => response.json() )
         .then(data => {
             inputId.value = data[`${type}Id`];
@@ -82,9 +81,9 @@ const getObject = ( id, type) => {
             document.getElementById("dni").value = data[`${type}DNI`];
             document.getElementById("telefono").value = data[`${type}Phone`];
             document.getElementById("direccion").value = data[`${type}Address`];
-            document.getElementById("select-user").value = data.user.userId;
+            /*document.getElementById("select-user").value = data.user.userId;*/
             if ( type === 'doctor' || type === 'receptionist') {
-                document.getElementById("select-shedule").value = data.shedule.sheduleId;
+                document.getElementById("select-schedule").value = data.schedule.scheduleId;
             }
             if ( type === 'doctor') {
                 document.getElementById("select-clinic").value = data.clinic.clinicID;
@@ -108,7 +107,7 @@ const deleteObject = (id , type) => {
       })
       .then((willDelete) => {
         if (willDelete) {
-            fetch(`/admin/delete${capitalizeText(type)}/${id}`)
+            fetch(`/${type}/delete/${id}`)
             .then(response => {
                 if ( response.ok ) {
                     swal("Poof! dato eliminado", {
@@ -163,13 +162,13 @@ const listarObjetos = ( listaObjetos, type ) => {
     listaObjetos.forEach(item => {
         let row = "<tr>";
         for (const attribute of Object.values(attributes)) {
-            if (typeof item[attribute] === 'object')
+            if (typeof item[attribute] === 'object' && item[attribute] !== null) {
                 row += "<td>" + item[attribute].clinicName + "</td>";
-            else 
+			} else 
                 row += "<td>" + item[attribute] + "</td>";
         }
-        row += `<td><a class="btn btn-outline-success" onclick="getObject(${item[idType]}, '${type}')"><i class="fa-solid fa-pen-to-square"></i></a></td>`;
-        row += `<td><a class="btn btn-outline-danger" onclick="deleteObject(${item[idType]}, '${type}')"><i class="fa-solid fa-trash"></i></a></td>`;
+        row += `<td><div class="btn-group"><a class="btn btn-outline-success" onclick="getObject(${item[idType]}, '${type}')"><i class="fa-solid fa-pen-to-square"></i></a>`;
+        row += `<a class="btn btn-outline-danger" onclick="deleteObject(${item[idType]}, '${type}')"><i class="fa-solid fa-trash"></i></a></div></td>`;
         row += '</tr>';
         tbody.insertAdjacentHTML("beforeend", row);
     });
@@ -177,20 +176,23 @@ const listarObjetos = ( listaObjetos, type ) => {
 
 const getOptionValues = ( tipo ) => {
     if ( !tiposData.includes(tipo) ) return;
-    fetch(`/admin/${tipo}`)
+    
+    if (tipo === tiposData[2]) {
+    	fetch(`/doctor/${tipo}`)
+    		.then(response => response.json() )
+    		.then(data => {
+				console.log(data);
+    			optionValuesForSpecialities = data;
+    	})
+    	.catch(error => {
+        	console.error("Error al obtener los datos:", error);
+    	});
+	}
+    
+    fetch(`/${tipo}/toList`)
     .then(response => response.json() )
     .then(data => {
         if (tipo === tiposData[0]) {
-
-            optionValuesForUser = data.map( obj => {
-                const dataModel = {
-                    id: obj.userId,
-                    label: obj.username
-                }
-                return dataModel;
-            });
-
-        } else if ( tipo === tiposData[1]) {
 
             optionValuesForClinic = data.map( obj => {
                 const dataModel = {
@@ -200,27 +202,24 @@ const getOptionValues = ( tipo ) => {
                 return dataModel;
             });
 
-        } else if ( tipo === tiposData[2] ){
+        } else if ( tipo === tiposData[1]) {
 
             optionValuesForShedule = data.map( obj => {
                 const dataModel = {
-                    id: obj.sheduleId,
+                    id: obj.scheduleId,
                     label: obj.startTime + '-' + obj.endTime
                 }
                 return dataModel;
             });
 
-        } else if (tipo === tiposData[3] ) {
-            optionValuesForSpecialities = data;
-        }
+        } 
     })
     .catch(error => {
         console.error("Error al obtener los datos:", error);
     });
 }
-getOptionValues('users');
-getOptionValues('clinics');
-getOptionValues('shedules');
+getOptionValues('clinic');
+getOptionValues('schedule');
 getOptionValues('specialities');
 
 /**
@@ -261,7 +260,7 @@ const buildModalInput = ( tipo ) => {
         modalBody.appendChild(fieldDiv);
     });
     selectLabels.forEach((labelText) => {
-        if (labelText !== 'Select user' && tipo === 'patient')
+        if (tipo === 'patient')
             return;
 
         if ((labelText === 'Select clinic' || labelText === 'Select speciality') && tipo === 'receptionist')
@@ -281,14 +280,12 @@ const buildModalInput = ( tipo ) => {
       
         let optionValues = [];
 
-        if (labelText === 'Select user') {
-            optionValues = optionValuesForUser 
-        } else if (labelText === 'Select clinic') {
-            optionValues = optionValuesForClinic 
-        } else if (labelText === 'Select shedule') {
-            optionValues = optionValuesForShedule 
+        if (labelText === 'Select clinic') {
+            optionValues = optionValuesForClinic;
+        } else if (labelText === 'Select schedule') {
+            optionValues = optionValuesForShedule;
         } else if (labelText === 'Select speciality') {
-            optionValues = optionValuesForSpecialities
+            optionValues = optionValuesForSpecialities;
         }
 
         optionValues.forEach((value) => {
@@ -315,7 +312,7 @@ const createJsonObject = ( tipo ) => {
             'doctorPhone': document.getElementById("telefono").value,
             'doctorAddress': document.getElementById("direccion").value,
             'user': {
-                'userId': document.getElementById("select-user").value,
+                'userId': '',
                 'email': '',
                 'username': '',
                 'password': '',
@@ -326,8 +323,8 @@ const createJsonObject = ( tipo ) => {
                 'clinicAddress': '',
                 'clinicPhone': '',
             },
-            'shedule':  {
-                'sheduleId': document.getElementById("select-shedule").value,
+            'schedule':  {
+                'scheduleId': document.getElementById("select-schedule").value,
                 'startTime': '00:00:00',
                 'endTime': '00:00:00'
             },
@@ -341,13 +338,13 @@ const createJsonObject = ( tipo ) => {
             'receptionistPhone': document.getElementById("telefono").value,
             'receptionistAddress': document.getElementById("direccion").value,
             'user': {
-                'userId': document.getElementById("select-user").value,
+                'userId': '',
                 'email': '',
                 'username': '',
                 'password': '',
             },
-            'shedule':  {
-                'sheduleId': document.getElementById("select-shedule").value,
+            'schedule':  {
+                'scheduleId': document.getElementById("select-schedule").value,
                 'startTime': '00:00:00',
                 'endTime': '00:00:00'
             }
@@ -360,7 +357,7 @@ const createJsonObject = ( tipo ) => {
             'patientPhone': document.getElementById("telefono").value,
             'patientAddress': document.getElementById("direccion").value,
             'user': {
-                'userId': document.getElementById("select-user").value,
+                'userId': '',
                 'email': '',
                 'username': '',
                 'password': '',
@@ -371,7 +368,7 @@ const createJsonObject = ( tipo ) => {
 
 // Listeners
 btnDoctor.addEventListener("click", function () {
-    fetch("/admin/doctors")
+    fetch("/doctor/toList")
         .then(response => response.json() )
         .then(data => {
             listarObjetos(data, 'doctor');
@@ -381,7 +378,7 @@ btnDoctor.addEventListener("click", function () {
         });
 });
 btnPatient.addEventListener("click", function () {
-    fetch("/admin/patients")
+    fetch("/patient/toList")
         .then(response => response.json() )
         .then(data => {
             listarObjetos(data, 'patient');
@@ -391,7 +388,7 @@ btnPatient.addEventListener("click", function () {
         });
 });
 btnReceptionist.addEventListener("click", function () {
-    fetch("/admin/receptionists")
+    fetch("/receptionist/toList")
         .then(response => response.json() )
         .then(data => {
             listarObjetos(data, 'receptionist');
@@ -417,7 +414,7 @@ btnGuardar.addEventListener("click", (event) => {
     const typeSave = event.target.getAttribute('data-type');
     createJsonObject(typeSave);
 
-    fetch(`/admin/add${capitalizeText(typeSave)}`, {
+    fetch(`/${typeSave}/add`, {
         credentials: 'include',
         method: 'POST',
         headers: {

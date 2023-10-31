@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.utp.app.model.Schedule;
-import com.utp.app.repository.SheduleRepository;
+import com.utp.app.repository.ScheduleRepository;
 
 @Service
-public class SheduleService {
+public class ScheduleService {
 
-	private final SheduleRepository sheduleRepository;
+	private final ScheduleRepository sheduleRepository;
 
-	public SheduleService(SheduleRepository sheduleRepository) {
+	public ScheduleService(ScheduleRepository sheduleRepository) {
 		this.sheduleRepository = sheduleRepository;
 	}
 	

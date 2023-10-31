@@ -30,4 +30,8 @@ public class UserService {
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
+	
+	public int addRole(Long userId, Long roleId) {
+		return userRepository.addRole(userId, roleId);
+	}
 }

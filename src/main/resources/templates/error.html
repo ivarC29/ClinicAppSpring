@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: headers}">
+</head>
+<body>
+	<div th:replace="~{fragments :: menu}"></div>
+	<div class="container text-center">
+		<h1 class="text-danger">Error [[${error}]]</h1>
+		<span>[[${errorMessage}]]</span>
+	</div>
+	<div th:replace="~{fragments :: footer}"></div>
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

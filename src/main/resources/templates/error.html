@@ -4,9 +4,13 @@
 </head>
 <body>
 	<div th:replace="~{fragments :: menu}"></div>
-	<div class="container text-center">
-		<h1 class="text-danger">Error [[${error}]]</h1>
-		<span>[[${errorMessage}]]</span>
+	<div class="container vh-100">
+		<div class="row justify-content-center align-items-center mt-5">
+            <div class="col-md-6 text-center">
+                <h1 class="display-2 fw-bold text-danger">Error [[${error}]] <i class="fa-solid fa-exclamation fa-beat fa-lg"></i></h1>
+                <p class="fw-bold text-secondary">[[${errorMessage}]]</p>
+            </div>
+        </div>
 	</div>
 	<div th:replace="~{fragments :: footer}"></div>
 	<div th:replace="~{fragments :: scripts}"></div>

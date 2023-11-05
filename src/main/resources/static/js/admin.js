@@ -181,7 +181,6 @@ const getOptionValues = ( tipo ) => {
     	fetch(`/doctor/${tipo}`)
     		.then(response => response.json() )
     		.then(data => {
-				console.log(data);
     			optionValuesForSpecialities = data;
     	})
     	.catch(error => {

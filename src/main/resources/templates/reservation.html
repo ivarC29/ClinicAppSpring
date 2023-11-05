@@ -41,7 +41,7 @@
 						<div class="col">
 							<div class="mb-3">
 								<label for="time" class="form-label">Hora cita:</label> 
-								<input type="text" class="form-control appointment-time">
+								<input type="time" class="form-control appointment-time">
 							</div>
 						</div>
 					</div>
@@ -56,14 +56,18 @@
 					<div class="col">
 						<div class="mb-3">
 							<label for="doctor" class="form-label">Medico:</label>
-							<input type="text" class="form-control doctor-name">
-							<input type="hidden" class="form-control doctor-id">
+							<select class="form-select select-doctor" aria-label="select speciality">
+								<option selected>Seleccionar medico</option>
+							</select>
 						</div>
 					</div>
 					<div class="col">
 						<div class="mb-3">
 							<label for="patient" class="form-label">Paciente:</label>
-							<input type="text" class="form-control patient-name">
+							<input type="text" class="form-control patient-name" list="pacientes">
+							<datalist id="pacientes">
+							  <!-- Las opciones se cargar dinamicamente con JavaScript -->
+							</datalist>
 							<input type="hidden" class="form-control patient-id">
 						</div>
 					</div>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.utp.app.model.Doctor;
+import com.utp.app.model.MedicalSpeciality;
 import com.utp.app.repository.DoctorRepository;
 
 @Service
@@ -40,6 +41,11 @@ public class DoctorService {
 	@Transactional
 	public void deleteDoctorById(Long id) {
 		doctorRepository.deleteById(id);
+	}
+	
+	@Transactional
+	public List<Doctor> getDoctorsByMedicalSpeciality(MedicalSpeciality speciality) {
+		return doctorRepository.findByMedicalSpeciality(speciality);
 	}
 
 }

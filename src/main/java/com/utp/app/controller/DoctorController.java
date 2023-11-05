@@ -73,5 +73,14 @@ public class DoctorController {
 
 		return optionDataList;
 	}
+	
+	@GetMapping("/getBySpeciality/{speciality}")
+	@ResponseBody
+	public List<Doctor> getDoctorsByMedicalSpeciality(@PathVariable("speciality") MedicalSpeciality speciality) {
+		List<Doctor> doctorList = doctorService.getDoctorsByMedicalSpeciality(speciality);
+
+		return doctorList;
+	}
+	
 
 }

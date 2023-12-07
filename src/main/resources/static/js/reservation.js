@@ -1,38 +1,18 @@
+let myModal;
+let data = [];
 const modal_label = document.getElementById("appointment-modal-label");
-const appointentDate = document.querySelector('.appointment-date');
-const appointentTime = document.querySelector('.appointment-time');
+const appointmentDate = document.querySelector('.appointment-date');
+const appointmentTime = document.querySelector('.appointment-time');
 const selectMedicalSpeciality = document.querySelector('.medical-speciality');
 const selectDoctor = document.querySelector('.select-doctor');
 const inputPatientName = document.querySelector('.patient-name');
 const inputPatientId = document.querySelector('.patient-id');
 const datalist = document.getElementById('pacientes');
 
+const btnSaveAppointment = document.querySelector('.btn-save-appointment');
+
 let medicalSpecialities;
 let patientList;
-
-document.addEventListener('DOMContentLoaded', function() {
-	const calendarElement = document.getElementById('calendar');
-	const myModal = new bootstrap.Modal(document.getElementById("modalAppointment"), {});
-	let data = [];
-	
-	renderCalendar(data, calendarElement, myModal);
-	
-});
-
-selectMedicalSpeciality.addEventListener( 'change', () => {
-	getDoctorBySpeciality( selectMedicalSpeciality.value );
-});
-
-inputPatientName.addEventListener('input', () => {
-	console.log('aqui')
-	const selectedName = inputPatientName.value;
-	const selectedPatient = patientList.find(paciente => paciente.patientName === selectedName);
-	if (selectedPatient) {
-		inputPatientId.value = selectedPatient.patientId;
-	} else {
-		inputPatientId.value = '';
-	}
-});
 
 const getSpecialities = async() => {
 	if(medicalSpecialities)  return;
@@ -83,15 +63,16 @@ const fillDataListPatient = async() => {
 
 const fillModal = ( title, date,  time = "00:00:00" ) => {
 	modal_label.innerHTML = title;
-    appointentDate.value = date;
-    appointentTime.value = time;
+    appointmentDate.value = date;
+    appointmentTime.value = time;
 	getSpecialities();
 	fillDataListPatient();
 }
 
+
 const renderCalendar = (data, element, modal) => {
 	const calendar = new FullCalendar.Calendar(element, {
-    		timeZone: 'UTC',
+    		// timeZone: 'UTC',
     		initialView: 'dayGridMonth',
     		themeSystem: 'bootstrap5',
     		headerToolbar: {
@@ -111,12 +92,16 @@ const renderCalendar = (data, element, modal) => {
 				}
     		},
     		eventClick: function(info) {
-    			let appointmentDate = info.event.start;
+				const now = new Date();
+				const reservedDate = new Date(info.event.start);
+				reservedDate.toUTCString();
+				
+				console.table({now, reservedDate});
+    			if ( now > reservedDate ) 
+					swal("Expiro", "La fecha de esta cita expiro.", "error");
+				else 
+					swal("Vigente", "Esta cita aun esta pendiente.", "success");
 
-    			var appointmentDateUtc = appointmentDate.toUTCString().split(' ')[4];
-
-    			info.jsEvent.preventDefault();
-    			swal(info.event.title, "Fecha: " + appointmentDateUtc + " fin: " + horaFinUTC);
     		},
     		locales: [
     			'es',
@@ -131,3 +116,77 @@ const renderCalendar = (data, element, modal) => {
     });
 	calendar.render();
 }
+
+const saveAppointment = () => {
+
+	const apppointmentDateTime = appointmentDate.value + ' ' + ((appointmentTime.value === '00:00:00') ? appointmentTime.value : appointmentTime.value+':00');
+
+	const appointment= {
+		'appointmentId': 0,
+		'patient': {
+			'patientId': inputPatientId.value
+		},
+		'doctor': {
+			'doctorId': selectDoctor.value
+		},
+		'receptionist': {
+			'receptionistId': 4
+		},
+		'diagnosis': {},
+		'recipe': {},
+		'appointmentDate': apppointmentDateTime
+	};
+
+	fetch('/appointment/add', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(appointment)
+	}).then( res => {
+		if ( !res.ok ) throw new Error('Error al guardar cita !.');
+		selectMedicalSpeciality.value = '0';
+		selectDoctor.innerHTML = '<option value="0" selected>Seleccionar medico</option>';
+		inputPatientName.value = '';
+		inputPatientId.value = '0';
+		myModal.hide();
+		swal('Guardado!', 'Guardado con exito !', 'success');
+	}).catch( console.log );
+};
+
+const getAppointments = async() => {
+
+	const res = await fetch('/appointment/fillCalendar');
+	const data = await res.json();
+
+	return data;
+
+}
+
+// Listeners
+
+document.addEventListener('DOMContentLoaded', async function() {
+	const calendarElement = document.getElementById('calendar');
+	myModal = new bootstrap.Modal(document.getElementById("modalAppointment"), {});
+	data = await getAppointments();
+	
+	renderCalendar(data, calendarElement, myModal);
+	
+});
+
+selectMedicalSpeciality.addEventListener( 'change', () => {
+	if (selectMedicalSpeciality.value === '0') return;
+	getDoctorBySpeciality( selectMedicalSpeciality.value );
+});
+
+inputPatientName.addEventListener('input', () => {
+	const selectedName = inputPatientName.value;
+	const selectedPatient = patientList.find(paciente => paciente.patientName === selectedName);
+	if (selectedPatient) {
+		inputPatientId.value = selectedPatient.patientId;
+	} else {
+		inputPatientId.value = '';
+	}
+});
+
+btnSaveAppointment.addEventListener( 'click', saveAppointment );

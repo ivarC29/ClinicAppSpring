@@ -8,6 +8,14 @@
             <div class="col-md-2 full-height">
 				<div class="card h-100 shadow">
 					<div class="card-body">
+						<ul class="list-group">
+							<li class="list-group-item Cardiología">Cardiología</li>
+							<li class="list-group-item Dermatología">Dermatología</li>
+							<li class="list-group-item Pediatría">Pediatría</li>
+							<li class="list-group-item Ginecología">Ginecología</li>
+							<li class="list-group-item Ortopedia">Ortopedia</li>
+							<li class="list-group-item Otros">Otros</li>
+						  </ul>
 					</div>
 				</div>
 			</div>
@@ -49,7 +57,7 @@
 						<div class="mb-3">
 							<label for="speciality" class="form-label">Especialidad: </label>
 							<select class="form-select medical-speciality" aria-label="select speciality">
-								<option selected>Seleccionar especialidad</option>
+								<option value='0' selected>Seleccionar especialidad</option>
 							</select>
 						</div>
 					</div>
@@ -57,7 +65,7 @@
 						<div class="mb-3">
 							<label for="doctor" class="form-label">Medico:</label>
 							<select class="form-select select-doctor" aria-label="select speciality">
-								<option selected>Seleccionar medico</option>
+								<option value='0' selected>Seleccionar medico</option>
 							</select>
 						</div>
 					</div>
@@ -66,16 +74,16 @@
 							<label for="patient" class="form-label">Paciente:</label>
 							<input type="text" class="form-control patient-name" list="pacientes">
 							<datalist id="pacientes">
-							  <!-- Las opciones se cargar dinamicamente con JavaScript -->
+								<!-- Las opciones se cargar dinamicamente con JavaScript -->
 							</datalist>
 							<input type="hidden" class="form-control patient-id">
 						</div>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cerrar</button>
-					<button type="button" class="btn btn-success btn-save-appointment"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+						<button type="button" class="btn btn-success btn-save-appointment"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+					</div>
 				</div>
 			</div>
 		</div>

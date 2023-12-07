@@ -2,6 +2,8 @@ package com.utp.app.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Receptionist {
 	private Long			receptionistId;
 	
 	@OneToMany(mappedBy = "receptionist", cascade = CascadeType.ALL)
+	@JsonIgnore
     private List<Appointment> 	appointments;
 	
 	@ManyToOne

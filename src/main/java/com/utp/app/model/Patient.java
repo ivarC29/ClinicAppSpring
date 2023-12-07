@@ -2,6 +2,8 @@ package com.utp.app.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +23,7 @@ public class Patient {
     private MedicalRecord medicalRecord;
 	
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+	@JsonIgnore
     private List<Appointment> appointments;
 
 	@Column(name = "patient_name")

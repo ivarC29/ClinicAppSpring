@@ -12,3 +12,22 @@
 .logo-form {
 	width: 250px;
 }
+
+.Cardiología {
+	background-color: rgb(189, 76, 76);
+}
+.Dermatología{
+	background-color: rgb(218, 165, 97);
+}
+.Pediatría{
+	background-color: rgb(177, 143, 209);
+}
+.Ginecología{
+	background-color: rgb(255, 86, 255);
+}
+.Ortopedia {
+	background-color: rgb(137, 183, 223);
+}
+.Otros{
+	background-color: rgb(112, 112, 112);
+}

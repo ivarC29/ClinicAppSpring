@@ -4,10 +4,86 @@
 </head>
 <body>
 	<div th:replace="~{fragments :: menu}"></div>
-	<div class="container">
-		<h1 class="mt-4 text-center text-danger"> Pagina en desarrollo</h1>
+	<div class="container-fluid vh-100 mt-4 me-4">
+		<h1 class="text-center text-info">Citas</h1>
+		<div class="row d-flex justify-content-around mt-4">
+			<div class="col-sm col-sm-6 col-lg-4 col-xl-3">
+				<div class="card">
+					<img src="/images/appointment.jpg" class="card-img-top" alt="appointment image">
+					<div class="card-body">
+					  <h5 class="card-title">Nombre del paciente</h5>
+					  <p class="card-text">Hora y fecha de cita</p>
+					  <p class="card-text">Historia medica.</p>
+					  <button class="btn btn-primary show-modal">Ver cita.</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="modal-appointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h1 class="modal-title fs-5 text-primary" id="modal-label">DNI - Nombre paciente</h1>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="row mb-3">
+							<div class="col">
+								<p class="fs-6"><strong>Numero Cita: </strong>#1234</p>
+							</div>
+							<div class="col">
+								<p class="fs-6"><strong>Fecha y hora</strong> 2021/12/12 9:30:00</p>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="diagnosis" class="col-form-label"><strong>Diagnostico:</strong></label>
+							<textarea class="form-control" id="diagnosis"></textarea>
+							<input type="hidden" id="diagnosis-id">
+						</div>
+						<hr>
+						<div class="mb-3">
+							<h5 class="text-center ">Receta medica</h5>
+							<table id="recipe-table" class="table table-hover" data-id-recipe="0">
+								<thead>
+									<th class="text-center">Id</th>
+									<th class="text-center">Medicamento</th>
+									<th class="text-center">Intervalo</th>
+									<th class="text-center">Dosis</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center">
+											#1
+										</td>
+										<td>
+											<input type="text" class="form-control form-control-sm" id="medicine-name" placeholder="medicamento">
+											<input type="hidden" id="medicine-id">
+										</td>
+										<td>
+											<input type="time" class="form-control form-control-sm" id="interval">
+										</td>
+										<td>
+											<input type="number" class="form-control form-control-sm" id="dosage">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cerrar</button>
+				  <button type="button" class="btn btn-outline-success btn-save"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
 	</div>
 	<div th:replace="~{fragments :: footer}"></div>
 	<div th:replace="~{fragments :: scripts}"></div>
+	<script th:src="@{/js/doctor.js}"></script>
 </body>
 </html>

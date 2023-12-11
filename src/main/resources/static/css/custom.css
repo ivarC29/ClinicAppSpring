@@ -15,19 +15,25 @@
 
 .Cardiología {
 	background-color: rgb(189, 76, 76);
+	color: beige;
 }
 .Dermatología{
 	background-color: rgb(218, 165, 97);
+	color: beige;
 }
 .Pediatría{
 	background-color: rgb(177, 143, 209);
+	color: beige;
 }
 .Ginecología{
 	background-color: rgb(255, 86, 255);
+	color: beige;
 }
 .Ortopedia {
 	background-color: rgb(137, 183, 223);
+	color: beige;
 }
 .Otros{
 	background-color: rgb(112, 112, 112);
+	color: beige;
 }

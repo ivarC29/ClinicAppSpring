@@ -22,12 +22,18 @@
 			<div class="col-md-10 full-height">
 				<div class="card h-100 shadow">
 					<div class="card-body">
-						<div id='calendar'></div>
+						<div id='calendar'>
+							<div class="text-center mt-4">
+								<i class="fa-solid fa-spinner fa-spin fa-2xl mt-4" style="color: #809cd0;"></i>
+								<h4>Espere un momento por favor.</h4>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- Modal -->
 	<div class="modal fade" id="modalAppointment" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -80,7 +86,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button type="button" class="btn btn-outline-danger"
 						data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cerrar</button>
 						<button type="button" class="btn btn-success btn-save-appointment"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
 					</div>

@@ -46,7 +46,7 @@ public class AppointmentController {
 			AppointmentDto appointmentDto = new AppointmentDto();
 			
 			appointmentDto.setId(appointment.getAppointmentId());
-			appointmentDto.setTitle(appointment.getDoctor().getDoctorName());
+			appointmentDto.setTitle(appointment.getDoctor().getDoctorName().split(", ")[1]+ "-" + appointment.getPatient().getPatientName().split(", ")[1]);
 			appointmentDto.setClassName(appointment.getDoctor().getMedicalSpeciality().getDescription());
 			appointmentDto.setStart(appointment.getAppointmentDate().toString());
 			appointmentDtoList.add(appointmentDto);

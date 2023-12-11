@@ -71,6 +71,12 @@ const fillModal = ( title, date,  time = "00:00:00" ) => {
 
 
 const renderCalendar = (data, element, modal) => {
+	element.innerHTML = `
+		<div class="text-center">
+		<i class="fa-solid fa-spinner fa-spin fa-xl" style="color: #809cd0;"></i>
+		<h4>Espere un momento</h4>.
+		</div>
+	`;
 	const calendar = new FullCalendar.Calendar(element, {
     		// timeZone: 'UTC',
     		initialView: 'dayGridMonth',
@@ -88,7 +94,8 @@ const renderCalendar = (data, element, modal) => {
 	    		    fillModal( info.view.title, info.dateStr);					
 				} else {
 	    		    const [fecha, hora] = info.dateStr.split('T');
-	    		    fillModal( info.view.title, fecha, hora.slice(0, -1));
+
+	    		    fillModal( info.view.title, fecha, hora.split('-')[0]);
 				}
     		},
     		eventClick: function(info) {

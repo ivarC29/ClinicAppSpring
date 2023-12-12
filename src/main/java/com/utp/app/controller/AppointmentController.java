@@ -20,7 +20,7 @@ import com.utp.app.service.AppointmentService;
 public class AppointmentController {
 
 	@Autowired
-	AppointmentService appointmentService;
+	private AppointmentService appointmentService;
 	
 	@GetMapping("/toList")
 	public List<Appointment> getAppointments() {
@@ -55,4 +55,9 @@ public class AppointmentController {
 		return  appointmentDtoList;
 	}
 	
+//	@GetMapping("/byDoctor/{doctorId}")
+//	public List<Appointment> getAppointmentsByDoctor(@PathVariable Integer doctorId) {
+//		return appointmentService.getAppointmentsByDoctorId(doctorId.longValue());
+//	}
+//	
 }

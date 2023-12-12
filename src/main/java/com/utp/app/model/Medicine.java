@@ -2,12 +2,23 @@ package com.utp.app.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "medicines")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "medicineId")
 public class Medicine {
 	
 	@Id
@@ -19,11 +30,42 @@ public class Medicine {
     private String medicineName;
 
 	@ManyToMany(mappedBy = "medicines")
-    @JsonIgnore
+	@JsonIgnore
     private List<Recipe> recipes;
     
 	@OneToMany(mappedBy="medicine", cascade=CascadeType.ALL)
 	@JsonIgnore
     private List<RecipeDetail> recipeDetails;
 
+	public Long getMedicineId() {
+		return medicineId;
+	}
+
+	public void setMedicineId(Long medicineId) {
+		this.medicineId = medicineId;
+	}
+
+	public String getMedicineName() {
+		return medicineName;
+	}
+
+	public void setMedicineName(String medicineName) {
+		this.medicineName = medicineName;
+	}
+
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+
+	public List<RecipeDetail> getRecipeDetails() {
+		return recipeDetails;
+	}
+
+	public void setRecipeDetails(List<RecipeDetail> recipeDetails) {
+		this.recipeDetails = recipeDetails;
+	}
 }

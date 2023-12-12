@@ -2,10 +2,14 @@ package com.utp.app.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "medical_records")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "recordId")
 public class MedicalRecord {
 
 	@Id

@@ -1,8 +1,19 @@
 package com.utp.app.model;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "diagnoses")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "diagnosisId")
 public class Diagnosis {
 
 	@Id

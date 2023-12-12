@@ -29,7 +29,7 @@ public class ProjectSecurityConfig {
         	.cors( (cors) -> cors.configurationSource( corsConfigurationSource() ))
         	.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/signup", "/user/signup", "/icon/**", "/images/**", "/bootstrap5/**", "/sweetalert/**", "/fontawesome6/**","/css/**", "/js/**").permitAll()
-                        .requestMatchers("/admin/**", "/appointment/toList","/doctor/**", "/receptionist/**", "/patient/**", "/user/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/admin/**", "/appointment/toList","/doctor/**", "/receptionist/**", "/patient/**", "/user/**", "/recipe/**", "/diagnosis/**").hasAnyRole("ADMIN")
                         .requestMatchers("/reservation/**", "/appointment/**","/doctor/toList", "/patient/toList").hasAnyRole("RECEPTIONIST", "ADMIN")
                         .requestMatchers("/appointment/toList", "/medicine/**", "/medicalRecord/**").hasAnyRole("DOCTOR")
                         .requestMatchers("/appointment/toList", "/medicalRecord/get/**").hasAnyRole("PATIENT")

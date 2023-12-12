@@ -1,5 +1,7 @@
 package com.utp.app.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,11 @@ public class MedicineService {
 
 	public MedicineService(MedicineRepository medicineRepository) {
 		this.medicineRepository = medicineRepository;
+	}
+	
+	@Transactional
+	public List<Medicine> getMedicines() {
+		return medicineRepository.findAll();
 	}
 	
 	@Transactional

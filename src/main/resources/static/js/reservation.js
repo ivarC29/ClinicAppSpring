@@ -71,12 +71,6 @@ const fillModal = ( title, date,  time = "00:00:00" ) => {
 
 
 const renderCalendar = (data, element, modal) => {
-	element.innerHTML = `
-		<div class="text-center">
-		<i class="fa-solid fa-spinner fa-spin fa-xl" style="color: #809cd0;"></i>
-		<h4>Espere un momento</h4>.
-		</div>
-	`;
 	const calendar = new FullCalendar.Calendar(element, {
     		// timeZone: 'UTC',
     		initialView: 'dayGridMonth',

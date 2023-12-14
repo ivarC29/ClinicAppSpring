@@ -27,7 +27,7 @@ public class HomeController {
 		SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 		logoutHandler.logout(request, null, null);
 		
-		return "redirect:/login";
+		return "login";
 	}
 	
 	@GetMapping("/signup")

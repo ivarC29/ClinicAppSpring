@@ -2,6 +2,7 @@ package com.utp.app.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.utp.app.model.Receptionist;
@@ -38,11 +40,21 @@ public class ReceptionistController {
 		List<Receptionist> objL_receptionists = new ArrayList<Receptionist>();
 		objL_receptionists = receptionistService.getReceptionists();
 		
+		Iterator<Receptionist> iterator = objL_receptionists.iterator();
+		while(iterator.hasNext()) {
+			Receptionist receptionist = iterator.next();
+			if (!receptionist.getUser().isEnabled()) {
+				iterator.remove();
+                System.out.println("Se ha eliminado a una persona con Usuario deshabilitado");
+			}
+		}
+		
 		return objL_receptionists;
 	}
 //TODO: move this logic to a global function
 	@PostMapping("/add")
-	public String add(@RequestBody Receptionist receptionist) {
+	@ResponseBody
+	public Receptionist add(@RequestBody Receptionist receptionist) {
 		Role role = new Role();
 		role.setRoleId(4L);
 		Set<Role> roles = new HashSet<>();
@@ -59,8 +71,21 @@ public class ReceptionistController {
 		
 		user = userService.saveUser(user);
 		receptionist.setUser(user);
-		receptionistService.saveReceptionist(receptionist);
-		return "redirect:/admin/";
+		receptionist = receptionistService.saveReceptionist(receptionist);
+		return receptionist;
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public Receptionist update(@RequestBody Receptionist receptionist) {
+		Receptionist receptionistTmp = receptionistService.getReceptionistById(receptionist.getReceptionistId());
+
+		if (receptionistTmp != null ) {
+			receptionist.setUser(receptionistTmp.getUser());
+			receptionist = receptionistService.saveReceptionist(receptionist);			
+		}
+
+		return receptionist;
 	}
 
 	@GetMapping("/get/{id}")
@@ -70,7 +95,14 @@ public class ReceptionistController {
 
 	@GetMapping("/delete/{id}")
 	public void delete(@PathVariable("id") Long id) {
-		receptionistService.deleteReceptionistById(id);
+		Receptionist receptionist = receptionistService.getReceptionistById(id);
+		User user = new User();
+		
+		if ( receptionist != null ) {
+			user = receptionist.getUser();
+			user.setEnabled(false);
+			userService.saveUser(user);
+		}
 	}
 	
 	//TODO: Create UtilService and move this method there

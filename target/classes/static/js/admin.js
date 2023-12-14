@@ -308,7 +308,7 @@ const createJsonObject = ( tipo ) => {
     
     if (tipo === 'doctor') {
         jsonObject= {
-            'doctorId': document.getElementById("id").value,
+            'doctorId': inputId.value,
             'doctorName': document.getElementById("nombre").value,
             'doctorDNI': document.getElementById("dni").value,
             'doctorPhone': document.getElementById("telefono").value,
@@ -323,7 +323,7 @@ const createJsonObject = ( tipo ) => {
         };
     } else if (tipo === 'receptionist') {
         jsonObject= {
-            'receptionistId': document.getElementById("id").value,
+            'receptionistId': inputId.value,
             'receptionistName': document.getElementById("nombre").value,
             'receptionistDNI': document.getElementById("dni").value,
             'receptionistPhone': document.getElementById("telefono").value,
@@ -334,7 +334,7 @@ const createJsonObject = ( tipo ) => {
         };
     } else if (tipo === 'patient') {
         jsonObject= {
-            'patientId': document.getElementById("id").value,
+            'patientId': inputId.value,
             'patientName': document.getElementById("nombre").value,
             'patientDNI': document.getElementById("dni").value,
             'patientPhone': document.getElementById("telefono").value,
@@ -389,9 +389,26 @@ btnAddReceptionist.addEventListener('click', () => {
 
 btnGuardar.addEventListener("click", (event) => {
     const typeSave = event.target.getAttribute('data-type');
+    let action = '';
+    let objectId;
+
     createJsonObject(typeSave);
 
-    fetch(`/${typeSave}/add`, {
+    if (typeSave === 'doctor'){
+        objectId =jsonObject.doctorId;
+    } else if (typeSave === 'patient') {
+        objectId = jsonObject.patientId;
+    } else {
+        objectId = jsonObject.receptionistId;
+    }
+
+    if (objectId === '0')
+        action = 'add';
+    else 
+        action = 'update'
+
+
+    fetch(`/${typeSave}/${action}`, {
         credentials: 'include',
         method: 'POST',
         headers: {

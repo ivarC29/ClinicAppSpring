@@ -3,10 +3,11 @@ package com.utp.app.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,13 +51,23 @@ public class DoctorController {
 	public List<Doctor> toList() {
 		List<Doctor> objL_doctors = new ArrayList<Doctor>();
 		objL_doctors = doctorService.getDoctors();
+		
+		Iterator<Doctor> iterator = objL_doctors.iterator();
+		while (iterator.hasNext()) {
+            Doctor doctor = iterator.next();
+            if (!doctor.getUser().isEnabled()) {
+                iterator.remove();
+                System.out.println("Se ha eliminado a una persona con Usuario deshabilitado");
+            }
+        }
 
 		return objL_doctors;
 	}
 	
 //TODO: move this logic to a global function
 	@PostMapping("/add")
-	public String add(@RequestBody Doctor doctor) {
+	@ResponseBody
+	public Doctor add(@RequestBody Doctor doctor) {
 		Role role = new Role();
 		role.setRoleId(2L);
 		Set<Role> roles = new HashSet<>();
@@ -73,8 +84,20 @@ public class DoctorController {
 		
 		user = userService.saveUser(user);
 		doctor.setUser(user);
-		doctorService.saveDoctor(doctor);
-		return "redirect:/admin/";
+		doctor = doctorService.saveDoctor(doctor);
+		return doctor;
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public Doctor update(@RequestBody Doctor doctor) {
+		Doctor doctorTmp = doctorService.getDoctorById(doctor.getDoctorId());
+
+		if (doctorTmp != null ) {
+			doctor.setUser(doctorTmp.getUser());
+			doctor = doctorService.saveDoctor(doctor);
+		}
+		return doctor;
 	}
 
 	@GetMapping("/get/{id}")
@@ -106,7 +129,14 @@ public class DoctorController {
 	@GetMapping("/delete/{id}")
 	@ResponseBody
 	public void delete(@PathVariable("id") Long id) {
-		doctorService.deleteDoctorById(id);;
+		Doctor doctor = doctorService.getDoctorById(id);
+		User user = new User();
+		
+		if ( doctor != null ) {
+			user = doctor.getUser();
+			user.setEnabled(false);
+			userService.saveUser(user);
+		}
 	}
 
 	@GetMapping("/specialities")

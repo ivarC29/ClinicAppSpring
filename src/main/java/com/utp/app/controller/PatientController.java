@@ -3,6 +3,7 @@ package com.utp.app.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -55,11 +56,22 @@ public class PatientController {
 		List<Patient> objL_patients = new ArrayList<Patient>();
 		objL_patients = patientService.getPatients();
 		
+		Iterator<Patient> iterator = objL_patients.iterator();
+		while(iterator.hasNext()) {
+			Patient patient = iterator.next();
+			if (!patient.getUser().isEnabled()) {
+				iterator.remove();
+                System.out.println("Se ha eliminado a una persona con Usuario deshabilitado");
+			}
+		}
+			
+		
 		return objL_patients;
 	}
 //TODO: move this logic to a global function
 	@PostMapping("/add")
-	public String add(@RequestBody Patient patient) {
+	@ResponseBody
+	public Patient add(@RequestBody Patient patient) {
 		Role role = new Role();
 		role.setRoleId(4L);
 		Set<Role> roles = new HashSet<>();
@@ -76,8 +88,21 @@ public class PatientController {
 		
 		user = userService.saveUser(user);
 		patient.setUser(user);
-		patientService.savePatient(patient);
-		return "redirect:/admin/";
+		patient = patientService.savePatient(patient);
+		return patient;
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public Patient update(@RequestBody Patient patient) {
+		Patient patientTmp = patientService.getPatientById(patient.getPatientId());
+
+		if (patientTmp != null ) {
+			patient.setUser(patientTmp.getUser());
+			patient = patientService.savePatient(patient);
+		}
+		
+		return patient;
 	}
 
 	@GetMapping("/get/{id}")
@@ -129,7 +154,14 @@ public class PatientController {
 	@GetMapping("/delete/{id}")
 	@ResponseBody
 	public void delete(@PathVariable("id") Long id) {
-		patientService.deletePatientById(id);;
+		Patient patient = patientService.getPatientById(id);
+		User user = new User();
+
+		if ( patient != null ) {
+			user = patient.getUser();
+			user.setEnabled(false);
+			userService.saveUser(user);
+		}
 	}
 	
 	//TODO: Create UtilService and move this method there

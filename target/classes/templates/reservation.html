@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: headers}"></head>
+<body>
+	<div th:replace="~{fragments :: menu}"></div>
+    <div class="container-fluid pt-5 mt-4 me-4">
+		<div class="row mx-4">
+            <div class="col-md-2 full-height">
+				<div class="card h-100 shadow">
+					<div class="card-body">
+						<ul class="list-group">
+							<li class="list-group-item Cardiología">Cardiología</li>
+							<li class="list-group-item Dermatología">Dermatología</li>
+							<li class="list-group-item Pediatría">Pediatría</li>
+							<li class="list-group-item Ginecología">Ginecología</li>
+							<li class="list-group-item Ortopedia">Ortopedia</li>
+							<li class="list-group-item Otros">Otros</li>
+						  </ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10 full-height">
+				<div class="card h-100 shadow">
+					<div class="card-body">
+						<div id='calendar'>
+							<div class="text-center mt-4">
+								<i class="fa-solid fa-spinner fa-spin fa-2xl mt-4 mb-4" style="color: #809cd0;"></i>
+								<h4 class="mt-2 mb-4">Espere un momento por favor.</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalAppointment" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="appointment-modal-label">Modal
+						title</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row form-outline mb-2">
+						<div class="col">
+							<div class="mb-3">
+								<label for="date" class="form-label">Fecha cita:</label> 
+								<input type="text" class="form-control appointment-date">
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label for="time" class="form-label">Hora cita:</label> 
+								<input type="time" class="form-control appointment-time">
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label for="speciality" class="form-label">Especialidad: </label>
+							<select class="form-select medical-speciality" aria-label="select speciality">
+								<option value='0' selected>Seleccionar especialidad</option>
+							</select>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label for="doctor" class="form-label">Medico:</label>
+							<select class="form-select select-doctor" aria-label="select speciality">
+								<option value='0' selected>Seleccionar medico</option>
+							</select>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label for="patient" class="form-label">Paciente:</label>
+							<input type="text" class="form-control patient-name" list="pacientes">
+							<datalist id="pacientes">
+								<!-- Las opciones se cargar dinamicamente con JavaScript -->
+							</datalist>
+							<input type="hidden" class="form-control patient-id">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-danger"
+						data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cerrar</button>
+						<button type="button" class="btn btn-success btn-save-appointment"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{fragments :: footer}"></div>
+	<div th:replace="~{fragments :: scripts}"></div>
+    <script th:src="@{/fullcalendar6/dist/index.global.min.js}"></script>
+    <script th:src="@{/js/reservation.js}"></script>
+</body>
+</html>

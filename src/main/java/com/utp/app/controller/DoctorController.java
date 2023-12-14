@@ -3,10 +3,13 @@ package com.utp.app.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.utp.app.model.Doctor;
 import com.utp.app.model.MedicalSpeciality;
+import com.utp.app.model.Role;
 import com.utp.app.model.User;
 import com.utp.app.service.DoctorService;
 import com.utp.app.service.UserService;
@@ -31,6 +35,9 @@ public class DoctorController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/")
 	public String goDoctor(Model model) {
@@ -46,12 +53,26 @@ public class DoctorController {
 
 		return objL_doctors;
 	}
-
+	
+//TODO: move this logic to a global function
 	@PostMapping("/add")
 	public String add(@RequestBody Doctor doctor) {
+		Role role = new Role();
+		role.setRoleId(2L);
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);		
+		
 		User user = new User();
+		user.setUserId(0L);
+		String username = createUsername(doctor.getDoctorName());
+		user.setUsername(username);
+		user.setRoles(roles);
+		user.setEmail("");
+		user.setPassword(passwordEncoder.encode(username));
+		user.setEnabled(true);
 		
-		
+		user = userService.saveUser(user);
+		doctor.setUser(user);
 		doctorService.saveDoctor(doctor);
 		return "redirect:/admin/";
 	}
@@ -68,7 +89,7 @@ public class DoctorController {
 		String username = principal.getName();
 		User user = new User();
 		Doctor doctor = new Doctor();	
-		System.out.println(username);
+
 		if ("admin".contentEquals(username))
 			return doctorService.getDoctorById(11L);
 
@@ -110,6 +131,16 @@ public class DoctorController {
 
 		return doctorList;
 	}
+	
+	//TODO: Create UtilService and move this method there
+	public static String createUsername(String fullName) {
+        String[] parts = fullName.split(",| ");
+        String firstName = parts[3].toLowerCase();
+        char firstLetterLastName1 = parts[0].charAt(0);
+        char firstLetterLastName2 = (parts.length > 2 && parts[1].length() > 0) ? parts[1].charAt(0) : ' ';
+        String result = firstName + ("" + firstLetterLastName1 + firstLetterLastName2).toLowerCase() + "doc";
+        return result;
+    }
 	
 
 }

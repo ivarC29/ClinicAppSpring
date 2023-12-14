@@ -313,22 +313,11 @@ const createJsonObject = ( tipo ) => {
             'doctorDNI': document.getElementById("dni").value,
             'doctorPhone': document.getElementById("telefono").value,
             'doctorAddress': document.getElementById("direccion").value,
-            'user': {
-                'userId': '',
-                'email': '',
-                'username': '',
-                'password': '',
-            },
             'clinic': {
-                'clinicID': document.getElementById("select-clinic").value,
-                'clinicName': '',
-                'clinicAddress': '',
-                'clinicPhone': '',
+                'clinicID': document.getElementById("select-clinic").value
             },
             'schedule':  {
-                'scheduleId': document.getElementById("select-schedule").value,
-                'startTime': '00:00:00',
-                'endTime': '00:00:00'
+                'scheduleId': document.getElementById("select-schedule").value
             },
             'medicalSpeciality': document.getElementById("select-speciality").value
         };
@@ -339,16 +328,8 @@ const createJsonObject = ( tipo ) => {
             'receptionistDNI': document.getElementById("dni").value,
             'receptionistPhone': document.getElementById("telefono").value,
             'receptionistAddress': document.getElementById("direccion").value,
-            'user': {
-                'userId': '',
-                'email': '',
-                'username': '',
-                'password': '',
-            },
             'schedule':  {
-                'scheduleId': document.getElementById("select-schedule").value,
-                'startTime': '00:00:00',
-                'endTime': '00:00:00'
+                'scheduleId': document.getElementById("select-schedule").value
             }
         };
     } else if (tipo === 'patient') {
@@ -357,13 +338,7 @@ const createJsonObject = ( tipo ) => {
             'patientName': document.getElementById("nombre").value,
             'patientDNI': document.getElementById("dni").value,
             'patientPhone': document.getElementById("telefono").value,
-            'patientAddress': document.getElementById("direccion").value,
-            'user': {
-                'userId': '',
-                'email': '',
-                'username': '',
-                'password': '',
-            }
+            'patientAddress': document.getElementById("direccion").value
         };
     }
 };

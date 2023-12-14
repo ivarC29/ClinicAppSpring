@@ -130,9 +130,6 @@ const saveAppointment = () => {
 		'doctor': {
 			'doctorId': selectDoctor.value
 		},
-		'receptionist': {
-			'receptionistId': 4
-		},
 		'appointmentDate': apppointmentDateTime
 	};
 

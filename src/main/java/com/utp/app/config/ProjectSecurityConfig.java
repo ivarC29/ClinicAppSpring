@@ -30,7 +30,7 @@ public class ProjectSecurityConfig {
         	.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/signup", "/user/signup", "/icon/**", "/images/**", "/bootstrap5/**", "/sweetalert/**", "/fontawesome6/**","/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/reservation/**", "/appointment/toList", "/appointment/add","/doctor/toList", "/doctor/specialities", "/patient/toList" , "/receptionist/**").hasAnyRole("RECEPTIONIST", "ADMIN")
+                        .requestMatchers("/reservation/**", "/doctor/getBySpeciality/**" ,"/appointment/toList", "/appointment/add","/doctor/toList", "/doctor/specialities", "/patient/toList" , "/receptionist/**").hasAnyRole("RECEPTIONIST", "ADMIN")
                         .requestMatchers("/appointment/toList", "/medicine/**", "/medicalRecord/**", "/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
                         .requestMatchers("/patient/**","/appointment/toList", "/medicalRecord/**").hasAnyRole("PATIENT", "ADMIN")
                         .anyRequest().authenticated()
@@ -60,7 +60,7 @@ public class ProjectSecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("https://clinicappspring-production.up.railway.app"));
+		configuration.setAllowedOrigins(Arrays.asList("https://clinicappspring-production.up.railway.app", "http://localhost:8082"));
 		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);

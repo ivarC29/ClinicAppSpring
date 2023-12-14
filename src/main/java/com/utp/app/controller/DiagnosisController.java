@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.utp.app.model.Diagnosis;
@@ -27,9 +26,8 @@ public class DiagnosisController {
 	}
 
 	@PutMapping("/add")
-	@ResponseBody
-	public void add(@RequestBody Diagnosis diagnosis) {
-		diagnosisService.saveDiagnosis(diagnosis);
+	public Diagnosis add(@RequestBody Diagnosis diagnosis) {
+		return diagnosisService.saveDiagnosis(diagnosis);
 	}
 
 	@GetMapping("/byAppointment/{appointmentId}")

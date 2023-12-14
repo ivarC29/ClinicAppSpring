@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "diagnoses")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "diagnosisId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "diagnosisId", scope = Diagnosis.class)
 public class Diagnosis {
 
 	@Id

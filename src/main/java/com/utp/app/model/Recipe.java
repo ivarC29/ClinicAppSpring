@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "recipes")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "recipeId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "recipeId", scope = Recipe.class)
 public class Recipe {
 
 	@Id

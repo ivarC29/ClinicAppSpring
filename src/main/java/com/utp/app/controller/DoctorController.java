@@ -1,5 +1,6 @@
 package com.utp.app.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.utp.app.model.Doctor;
 import com.utp.app.model.MedicalSpeciality;
+import com.utp.app.model.User;
 import com.utp.app.service.DoctorService;
+import com.utp.app.service.UserService;
 
 @Controller
 @RequestMapping("/doctor")
@@ -25,6 +28,9 @@ public class DoctorController {
 
 	@Autowired
 	DoctorService doctorService;
+	
+	@Autowired
+	UserService userService;
 
 	@GetMapping("/")
 	public String goDoctor(Model model) {
@@ -43,6 +49,9 @@ public class DoctorController {
 
 	@PostMapping("/add")
 	public String add(@RequestBody Doctor doctor) {
+		User user = new User();
+		
+		
 		doctorService.saveDoctor(doctor);
 		return "redirect:/admin/";
 	}
@@ -52,6 +61,26 @@ public class DoctorController {
 	public Doctor get(@PathVariable("id") Long id) {
 		return doctorService.getDoctorById(id);
 	}
+	
+	@GetMapping("/get")
+    @ResponseBody
+    public Doctor get(Principal principal) {
+		String username = principal.getName();
+		User user = new User();
+		Doctor doctor = new Doctor();	
+		System.out.println(username);
+		if ("admin".contentEquals(username))
+			return doctorService.getDoctorById(11L);
+
+		user = userService.findByUsername(username);
+		
+		for (Doctor doc : user.getDoctors()) {
+            doctor = doc;
+            break;
+        }
+
+		return doctor;
+    }
 
 	@GetMapping("/delete/{id}")
 	@ResponseBody

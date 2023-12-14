@@ -133,8 +133,6 @@ const saveAppointment = () => {
 		'receptionist': {
 			'receptionistId': 4
 		},
-		'diagnosis': {},
-		'recipe': {},
 		'appointmentDate': apppointmentDateTime
 	};
 

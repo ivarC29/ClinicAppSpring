@@ -24,19 +24,24 @@ public class RecipeController {
 	
 	@Autowired
 	private RecipeDetailService recipeDetailService;
-	
-	@GetMapping("/byAppointment/{appointmentId}")
-	public Recipe getRecipeByAppointmentId(@PathVariable Long appointmentId) {
-		return recipeService.getRecipeByAppointmentId(appointmentId);
+
+	@PutMapping("/add")
+	public Recipe saveRecipe(@RequestBody Recipe recipe) {
+		return recipeService.saveRecipe(recipe);
 	}
-	
+
 	@GetMapping("/detail/{recipeId}")
 	public List<RecipeDetail> getRecipeDetailByRecipeId(@PathVariable Long recipeId) {
 		return recipeDetailService.getRecipeDetailsByRecipeId(recipeId);
 	}
-	
+
 	@PutMapping("/detail/add")
 	public RecipeDetail saveRecipeDetail(@RequestBody RecipeDetail recipeDetail) {
 		return recipeDetailService.saveRecipeDetail(recipeDetail);
+	}
+
+	@GetMapping("/byAppointment/{appointmentId}")
+	public Recipe getRecipeByAppointmentId(@PathVariable Long appointmentId) {
+		return recipeService.getRecipeByAppointmentId(appointmentId);
 	}
 }

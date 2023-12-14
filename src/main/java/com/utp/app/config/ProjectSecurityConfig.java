@@ -29,10 +29,10 @@ public class ProjectSecurityConfig {
         	.cors( (cors) -> cors.configurationSource( corsConfigurationSource() ))
         	.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/signup", "/user/signup", "/icon/**", "/images/**", "/bootstrap5/**", "/sweetalert/**", "/fontawesome6/**","/css/**", "/js/**").permitAll()
-                        .requestMatchers("/admin/**", "/appointment/toList","/doctor/**", "/receptionist/**", "/patient/**", "/user/**", "/recipe/**", "/diagnosis/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/reservation/**", "/appointment/**","/doctor/toList", "/patient/toList").hasAnyRole("RECEPTIONIST", "ADMIN")
-                        .requestMatchers("/appointment/toList", "/medicine/**", "/medicalRecord/**").hasAnyRole("DOCTOR")
-                        .requestMatchers("/appointment/toList", "/medicalRecord/get/**").hasAnyRole("PATIENT")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/reservation/**", "/appointment/toList", "/appointment/add","/doctor/toList", "/doctor/specialities", "/patient/toList" , "/receptionist/**").hasAnyRole("RECEPTIONIST", "ADMIN")
+                        .requestMatchers("/appointment/toList", "/medicine/**", "/medicalRecord/**", "/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                        .requestMatchers("/patient/**","/appointment/toList", "/medicalRecord/**").hasAnyRole("PATIENT", "ADMIN")
                         .anyRequest().authenticated()
                 ).formLogin(form -> form.loginPage("/login").permitAll())
                 .httpBasic(Customizer.withDefaults());

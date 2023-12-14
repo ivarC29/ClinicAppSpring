@@ -2,9 +2,7 @@ package com.utp.app.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,7 +16,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "medicines")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "medicineId")
 public class Medicine {
 	
 	@Id

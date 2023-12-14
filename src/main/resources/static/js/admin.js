@@ -45,6 +45,8 @@ const ReceptionistAttributes = {
     "Telefono": "receptionistPhone",
     "Direccion": "receptionistAddress"
 };
+
+
 // input values
 const fields = [
     { label: "Nombre", id: "nombre", placeholder: "" },
@@ -153,18 +155,18 @@ const listarObjetos = ( listaObjetos, type ) => {
     const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
     thead.innerHTML = "";
     let headerRow = "<tr>";
-        for (const title of Object.keys(attributes)) {
-            headerRow += "<th>" + title + "</th>";
-        }
-        headerRow += "<th colspan='2'>Accion</th></tr>";
-        thead.insertAdjacentHTML("beforeend", headerRow);
+    for (const title of Object.keys(attributes)) {
+        headerRow += "<th>" + title + "</th>";
+    }
+    headerRow += "<th colspan='2'>Accion</th></tr>";
+    thead.insertAdjacentHTML("beforeend", headerRow);
     tbody.innerHTML = "";
     listaObjetos.forEach(item => {
         let row = "<tr>";
         for (const attribute of Object.values(attributes)) {
-            if (typeof item[attribute] === 'object' && item[attribute] !== null) {
+            if (typeof item[attribute] === 'object' && item[attribute] !== null)
                 row += "<td>" + item[attribute].clinicName + "</td>";
-			} else 
+			else
                 row += "<td>" + item[attribute] + "</td>";
         }
         row += `<td><div class="btn-group"><a class="btn btn-outline-success" onclick="getObject(${item[idType]}, '${type}')"><i class="fa-solid fa-pen-to-square"></i></a>`;
@@ -186,36 +188,37 @@ const getOptionValues = ( tipo ) => {
     	.catch(error => {
         	console.error("Error al obtener los datos:", error);
     	});
-	}
+	} else {
+        fetch(`/${tipo}/toList`)
+        .then(response => response.json() )
+        .then(data => {
+            if (tipo === tiposData[0]) {
     
-    fetch(`/${tipo}/toList`)
-    .then(response => response.json() )
-    .then(data => {
-        if (tipo === tiposData[0]) {
-
-            optionValuesForClinic = data.map( obj => {
-                const dataModel = {
-                    id: obj.clinicID,
-                    label: obj.clinicName
-                }
-                return dataModel;
-            });
-
-        } else if ( tipo === tiposData[1]) {
-
-            optionValuesForShedule = data.map( obj => {
-                const dataModel = {
-                    id: obj.scheduleId,
-                    label: obj.startTime + '-' + obj.endTime
-                }
-                return dataModel;
-            });
-
-        } 
-    })
-    .catch(error => {
-        console.error("Error al obtener los datos:", error);
-    });
+                optionValuesForClinic = data.map( obj => {
+                    const dataModel = {
+                        id: obj.clinicID,
+                        label: obj.clinicName
+                    }
+                    return dataModel;
+                });
+    
+            } else if ( tipo === tiposData[1]) {
+    
+                optionValuesForShedule = data.map( obj => {
+                    const dataModel = {
+                        id: obj.scheduleId,
+                        label: obj.startTime + '-' + obj.endTime
+                    }
+                    return dataModel;
+                });
+    
+            } 
+        })
+        .catch(error => {
+            console.error("Error al obtener los datos:", error);
+        });
+    }
+    
 }
 getOptionValues('clinic');
 getOptionValues('schedule');
@@ -429,8 +432,4 @@ btnGuardar.addEventListener("click", (event) => {
             throw new Error(`Error al guardar ${typeSave}`);
     })
     .catch( console.log )
-});
-
-btnAppointment.addEventListener( 'click', () => {
-    swal('Aviso', 'Funcion en desarrollo !', 'info');
 });

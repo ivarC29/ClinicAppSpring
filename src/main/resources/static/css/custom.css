@@ -37,3 +37,23 @@
 	background-color: rgb(112, 112, 112);
 	color: beige;
 }
+
+.empty {
+	height: 500px;
+}
+
+@media (max-width: 768px) {
+	.fixed-top {
+		position: static;
+	}
+
+	.empty {
+		display: none;
+	}
+}
+@media (min-width: 768px) {
+	.img-fixed {
+		padding-top: 120px !important;
+		padding-bottom: 40px !important;
+	}
+}

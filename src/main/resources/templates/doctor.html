@@ -4,15 +4,15 @@
 </head>
 <body>
 	<div th:replace="~{fragments :: menu}"></div>
-	<div class="container-fluid mt-4 me-4">
+	<div class="container pt-5 mt-4">
 		<h1 class="text-center text-info">Citas</h1>
 		<div id="appointments-section" class="row d-flex justify-content-around mt-4">
 			<div class="text-center mt-4">
-				<i class="fa-solid fa-spinner fa-spin fa-2xl mt-4" style="color: #809cd0;"></i>
-				<h4>Espere un momento por favor.</h4>
+				<i class="fa-solid fa-spinner fa-spin fa-2xl mt-4 mb-4" style="color: #809cd0;"></i>
+				<h4 class="mt-2 mb-4">Espere un momento por favor.</h4>
 			</div>
 		</div>
-			
+
 		<!-- Modal -->
 		<div class="modal fade" id="modal-appointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-xl">
@@ -52,6 +52,9 @@
 									
 								</tbody>
 							</table>
+							<datalist id="med-list-data">
+								
+							</datalist>
 						</div>
 					</form>
 				</div>

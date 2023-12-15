@@ -31,7 +31,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/signup", "/user/signup", "/icon/**", "/images/**", "/bootstrap5/**", "/sweetalert/**", "/fontawesome6/**","/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/reservation/**", "/doctor/getBySpeciality/**" ,"/appointment/toList", "/appointment/add","/doctor/toList", "/doctor/specialities", "/patient/toList" , "/receptionist/**").hasAnyRole("RECEPTIONIST", "ADMIN")
-                        .requestMatchers("/appointment/toList", "/medicine/**", "/medicalRecord/**", "/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                        .requestMatchers("/appointment/toList", "/medicine/**", "/medicalRecord/**", "/doctor/**", "/diagnosis/**", "/recipe/**").hasAnyRole("DOCTOR", "ADMIN")
                         .requestMatchers("/patient/**","/appointment/toList", "/medicalRecord/**").hasAnyRole("PATIENT", "ADMIN")
                         .anyRequest().authenticated()
                 ).formLogin(form -> form.loginPage("/login").permitAll())
